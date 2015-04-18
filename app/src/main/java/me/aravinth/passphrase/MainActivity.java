@@ -46,7 +46,7 @@ public class MainActivity extends ActionBarActivity {
                     Toast.makeText(getApplicationContext(), "PassPhrase Copied", Toast.LENGTH_SHORT).show();
                 }
                 else
-                    Toast.makeText(getApplicationContext(), "Create Passphrase ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "No phrase to copy ", Toast.LENGTH_SHORT).show();
             }
         });
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {

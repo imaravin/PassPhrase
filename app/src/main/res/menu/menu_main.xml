@@ -1,6 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
+    <item android:id="@+id/listview" android:title="Previous PassPhrases"/>
     <item android:id="@+id/settings" android:title="Settings"/>
     <item android:id="@+id/about" android:title="About"/>
     <item android:id="@+id/help" android:title="Help"/>
