@@ -20,7 +20,7 @@ public class MainActivity extends ActionBarActivity {
     SeekBar seekBar;
     int min=6;
     int max=18;
-    int length=0;
+    int length=6;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,10 +39,14 @@ public class MainActivity extends ActionBarActivity {
         cpy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("label", "Text to copy");
-                clipboard.setPrimaryClip(clip);
-                Toast.makeText(getApplicationContext(), "PassPhrase Copied",Toast.LENGTH_SHORT).show();
+                if(textView.getText().toString().compareTo("")!=0) {
+                    ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                    ClipData clip = ClipData.newPlainText("label", textView.getText().toString());
+                    clipboard.setPrimaryClip(clip);
+                    Toast.makeText(getApplicationContext(), "PassPhrase Copied", Toast.LENGTH_SHORT).show();
+                }
+                else
+                    Toast.makeText(getApplicationContext(), "Create Passphrase ", Toast.LENGTH_SHORT).show();
             }
         });
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -93,6 +97,10 @@ public class MainActivity extends ActionBarActivity {
         {
             Intent myIntent = new Intent(MainActivity.this, about.class);
             startActivity(myIntent);
+        }
+        else if(id==R.id.settings)
+        {
+
         }
 
         return super.onOptionsItemSelected(item);
