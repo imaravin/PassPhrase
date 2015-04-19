@@ -9,6 +9,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,9 +22,14 @@ public class MainActivity extends ActionBarActivity {
     Button crt,cpy;
     TextView textView;
     SeekBar seekBar;
+    EditText text;
     int min=6;
-    int max=18;
-    int length=6;
+    int max=25;
+    int length=4;
+    RadioButton a,n,an;
+    CheckBox sp;
+    RadioGroup grp;
+    DataBase myDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,10 +39,32 @@ public class MainActivity extends ActionBarActivity {
         cpy=(Button)findViewById(R.id.cpybutton);
         textView=(TextView)findViewById(R.id.textView);
         seekBar=(SeekBar)findViewById(R.id.seekBar);
+        text=(EditText)findViewById(R.id.textarea);
+        a=(RadioButton)findViewById(R.id.alpha);
+        an=(RadioButton)findViewById(R.id.alphanum);
+        n=(RadioButton)findViewById(R.id.numeral);
+        sp=(CheckBox)findViewById(R.id.checkbox);
+        grp=(RadioGroup)findViewById(R.id.group);
         crt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            textView.setText(Random.getPassword(length));
+                if(a.isChecked())
+           textView.setText(RandomStringUtils.randomAlphabetic(length));
+                if(an.isChecked())
+                    textView.setText(RandomStringUtils.randomAlphanumeric(length));
+               if(n.isChecked())
+                   textView.setText(RandomStringUtils.randomNumeric(length));
+                if(text.getText().toString().compareTo("")!=0)
+                {
+                  //  myDb =new DataBase(getApplicationContext());
+                 //   myDb.open();
+                 //   myDb.insertRow(text.getText().toString(),textView.getText().toString());
+                    Toast.makeText(getApplicationContext(),"PassPhrase Saved",Toast.LENGTH_SHORT).show();
+                    text.setText("");
+                }
+                else
+                    Toast.makeText(getApplicationContext(),"PassPhrase Created Enter the site name to save",Toast.LENGTH_SHORT).show();
+
             }
         });
         cpy.setOnClickListener(new View.OnClickListener() {
@@ -53,11 +84,11 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if(progress<min)
-                    length=min;
-                else if(progress>max)
+                    length=progress+min;
+                else if((progress+length)>max)
                     length=max;
                 else
-                    length=progress;
+                    length=min+progress;
 
             }
 
@@ -98,9 +129,10 @@ public class MainActivity extends ActionBarActivity {
             Intent myIntent = new Intent(MainActivity.this, about.class);
             startActivity(myIntent);
         }
-        else if(id==R.id.settings)
+        else if(id==R.id.old)
         {
-
+          //  Intent myIntent = new Intent(MainActivity.this, list.class);
+          //  startActivity(myIntent);
         }
 
         return super.onOptionsItemSelected(item);

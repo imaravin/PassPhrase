@@ -9,4 +9,7 @@
     <string name="title_activity_about">about</string>
     <string name="title_activity_help">help</string>
     <string name="listview">listview</string>
+    <string name="title_activity_list">Old Phrases</string>
+    <string name="pass_name">password</string>
+    <string name="grop">Alphabets</string>
 </resources>
