@@ -56,9 +56,9 @@ public class MainActivity extends ActionBarActivity {
                    textView.setText(RandomStringUtils.randomNumeric(length));
                 if(text.getText().toString().compareTo("")!=0)
                 {
-                  //  myDb =new DataBase(getApplicationContext());
-                 //   myDb.open();
-                 //   myDb.insertRow(text.getText().toString(),textView.getText().toString());
+                   myDb =new DataBase(getApplicationContext());
+                   myDb.open();
+                   myDb.insertRow(text.getText().toString(),textView.getText().toString());
                     Toast.makeText(getApplicationContext(),"PassPhrase Saved",Toast.LENGTH_SHORT).show();
                     text.setText("");
                 }
@@ -131,8 +131,8 @@ public class MainActivity extends ActionBarActivity {
         }
         else if(id==R.id.old)
         {
-          //  Intent myIntent = new Intent(MainActivity.this, list.class);
-          //  startActivity(myIntent);
+           Intent myIntent = new Intent(MainActivity.this, list.class);
+            startActivity(myIntent);
         }
 
         return super.onOptionsItemSelected(item);
