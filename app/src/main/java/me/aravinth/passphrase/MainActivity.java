@@ -17,6 +17,9 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 
 public class MainActivity extends ActionBarActivity {
     Button crt,cpy;
@@ -30,7 +33,7 @@ public class MainActivity extends ActionBarActivity {
     CheckBox sp;
     RadioGroup grp;
     DataBase myDb;
-
+    AdView mAdView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +48,13 @@ public class MainActivity extends ActionBarActivity {
         n=(RadioButton)findViewById(R.id.numeral);
         sp=(CheckBox)findViewById(R.id.checkbox);
         grp=(RadioGroup)findViewById(R.id.group);
+        mAdView = (AdView) findViewById(R.id.ad_view);
+
+
+       AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
+
+
+        mAdView.loadAd(adRequest);
         crt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
