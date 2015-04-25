@@ -32,7 +32,7 @@ public class MainActivity extends ActionBarActivity {
     RadioButton a,n,an;
     CheckBox sp;
     RadioGroup grp;
-    DataBase myDb;
+
     AdView mAdView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,9 +66,7 @@ public class MainActivity extends ActionBarActivity {
                    textView.setText(RandomStringUtils.randomNumeric(length));
                 if(text.getText().toString().compareTo("")!=0)
                 {
-                   myDb =new DataBase(getApplicationContext());
-                   myDb.open();
-                   myDb.insertRow(text.getText().toString(),textView.getText().toString());
+
                     Toast.makeText(getApplicationContext(),"PassPhrase Saved",Toast.LENGTH_SHORT).show();
                     text.setText("");
                 }
@@ -141,7 +139,7 @@ public class MainActivity extends ActionBarActivity {
         }
         else if(id==R.id.old)
         {
-           Intent myIntent = new Intent(MainActivity.this, list.class);
+            Intent myIntent = new Intent(MainActivity.this, list.class);
             startActivity(myIntent);
         }
 
