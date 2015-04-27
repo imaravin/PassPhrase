@@ -30,7 +30,7 @@ public class MainActivity extends ActionBarActivity {
     RadioButton a,n,an;
     CheckBox sp;
     RadioGroup grp;
-
+    DBAdapter mydb;
     AdView mAdView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,22 +47,23 @@ public class MainActivity extends ActionBarActivity {
         sp=(CheckBox)findViewById(R.id.checkbox);
         grp=(RadioGroup)findViewById(R.id.group);
         mAdView = (AdView) findViewById(R.id.ad_view);
-
-
        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
-
-
         mAdView.loadAd(adRequest);
+
         crt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (length != 0) {
+                    openDB();
                     if (a.isChecked())
                         textView.setText(RandomStringUtils.randomAlphabetic(length));
                     if (an.isChecked())
                         textView.setText(RandomStringUtils.randomAlphanumeric(length));
                     if (n.isChecked())
                         textView.setText(RandomStringUtils.randomNumeric(length));
+
+                    mydb.insertRow(textView.getText().toString());
+                    mydb.close();
                    /* if (text.getText().toString().compareTo("") != 0) {
 
                         Toast.makeText(getApplicationContext(), "PassPhrase Saved", Toast.LENGTH_SHORT).show();
@@ -110,6 +111,11 @@ public class MainActivity extends ActionBarActivity {
         });
     }
 
+    private void openDB() {
+        mydb=new DBAdapter(this);
+        mydb.open();
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -133,6 +139,11 @@ public class MainActivity extends ActionBarActivity {
         else if(id==R.id.about)
         {
             Intent myIntent = new Intent(MainActivity.this, about.class);
+            startActivity(myIntent);
+        }
+        else if(id==R.id.settings)
+        {
+            Intent myIntent = new Intent(MainActivity.this, yourpassphrases.class);
             startActivity(myIntent);
         }
 

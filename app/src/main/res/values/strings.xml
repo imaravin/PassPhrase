@@ -13,4 +13,5 @@
     <string name="pass_name">password</string>
     <string name="grop">Alphabets</string>
     <string name="adId">ca-app-pub-2443157506899389/6041757351</string>
+    <string name="title_activity_yourpassphrases">yourpassphrases</string>
 </resources>
