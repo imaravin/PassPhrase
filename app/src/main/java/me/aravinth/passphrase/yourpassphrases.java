@@ -50,8 +50,8 @@ public class yourpassphrases extends ActionBarActivity {
 
         // Setup mapping from cursor to view fields:
         String[] fromFieldNames = new String[]
-                {DBAdapter.KEY_ROWID, DBAdapter.KEY_TASK};
-        int[] toViewIDs=new int[]{R.id.id_view,R.id.key_view};
+                {DBAdapter.KEY_DATE, DBAdapter.KEY_TASK,DBAdapter.KEY_NAME};
+        int[] toViewIDs=new int[]{R.id.id_view,R.id.key_view,R.id.usr};
         // Create adapter to may columns of the DB onto elemesnt in the UI.
         SimpleCursorAdapter myCursorAdapter =
                 new SimpleCursorAdapter(
@@ -69,10 +69,15 @@ public class yourpassphrases extends ActionBarActivity {
         myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(),"Click ListItem Number " + position+id, Toast.LENGTH_LONG).show();
+
+                 mydb.open();
+                Cursor sam=mydb.getRow(id);
+                String x=sam.getString(sam.getColumnIndex(DBAdapter.KEY_DATE));
                 ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("label","aravinth");
+                ClipData clip = ClipData.newPlainText("label", x);
                 clipboard.setPrimaryClip(clip);
+                Toast.makeText(getApplicationContext(),"Content copied to Clipboard", Toast.LENGTH_LONG).show();
+
             }
         });
     }

@@ -16,7 +16,8 @@ import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
@@ -25,10 +26,10 @@ public class MainActivity extends ActionBarActivity {
     Button crt,cpy;
     TextView textView;
     SeekBar seekBar;
-   // EditText text;
+    EditText text;
     int length=0;
     RadioButton a,n,an;
-    CheckBox sp;
+    CheckBox sp,up;
     RadioGroup grp;
     DBAdapter mydb;
     AdView mAdView;
@@ -40,11 +41,12 @@ public class MainActivity extends ActionBarActivity {
         cpy=(Button)findViewById(R.id.cpybutton);
         textView=(TextView)findViewById(R.id.textView);
         seekBar=(SeekBar)findViewById(R.id.seekBar);
-      //  text=(EditText)findViewById(R.id.textarea);
+         text=(EditText)findViewById(R.id.editText);
         a=(RadioButton)findViewById(R.id.alpha);
         an=(RadioButton)findViewById(R.id.alphanum);
         n=(RadioButton)findViewById(R.id.numeral);
-        sp=(CheckBox)findViewById(R.id.checkbox);
+        up=(CheckBox)findViewById(R.id.upcheck);
+        sp=(CheckBox)findViewById(R.id.spcheck);
         grp=(RadioGroup)findViewById(R.id.group);
         mAdView = (AdView) findViewById(R.id.ad_view);
        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
@@ -55,22 +57,16 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
                 if (length != 0) {
                     openDB();
-                    if (a.isChecked())
-                        textView.setText(RandomStringUtils.randomAlphabetic(length));
-                    if (an.isChecked())
-                        textView.setText(RandomStringUtils.randomAlphanumeric(length));
-                    if (n.isChecked())
-                        textView.setText(RandomStringUtils.randomNumeric(length));
-
-                    mydb.insertRow(textView.getText().toString());
+                   textView.setText(Random.getPassword(length,a.isChecked(),n.isChecked(),an.isChecked(),up.isChecked(),sp.isChecked()));
+                    Date d=new Date();
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    String check = dateFormat.format(d);
+                    if(text.getText().toString().compareTo("")==0)
+                    mydb.insertRow("Created Anonymously","Created On "+check,textView.getText().toString());
+                    else
+                    mydb.insertRow("Created for "+text.getText().toString(),"Created On "+check,textView.getText().toString());
                     mydb.close();
-                   /* if (text.getText().toString().compareTo("") != 0) {
-
-                        Toast.makeText(getApplicationContext(), "PassPhrase Saved", Toast.LENGTH_SHORT).show();
-                        text.setText("");
-                    } else
-                        Toast.makeText(getApplicationContext(), "PassPhrase Created Enter the site name to save", Toast.LENGTH_SHORT).show();
-*/
+                   Toast.makeText(getApplicationContext(),"PassPhrase Created",Toast.LENGTH_SHORT).show();
                 }
                 else
                     Toast.makeText(getApplicationContext(), "Cant create zero length PassPhrase", Toast.LENGTH_SHORT).show();

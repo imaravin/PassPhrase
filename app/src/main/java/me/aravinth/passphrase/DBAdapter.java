@@ -7,21 +7,23 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-/**
- * Created by aravinth on 27-Apr-15.
- */
 public class DBAdapter {
 
     private static final String TAG = "DBAdapter"; //used for logging database version changes
 
     // Field Names:
     public static final String KEY_ROWID = "_id";
+    public static final String KEY_NAME= "name";
     public static final String KEY_TASK = "task";
-    public static final String[] ALL_KEYS = new String[] {KEY_ROWID, KEY_TASK};
+    public static final String KEY_DATE = "date";
+
+    public static final String[] ALL_KEYS = new String[] {KEY_ROWID,KEY_NAME, KEY_TASK, KEY_DATE};
 
     // Column Numbers for each Field Name:
     public static final int COL_ROWID = 0;
-    public static final int COL_TASK = 1;
+    public static final int COL_NAME=1;
+    public static final int COL_TASK = 2;
+    public static final int COL_DATE = 3;
 
     // DataBase info:
     public static final String DATABASE_NAME = "dbToDo";
@@ -32,6 +34,8 @@ public class DBAdapter {
     private static final String DATABASE_CREATE_SQL =
             "CREATE TABLE " + DATABASE_TABLE
                     + " (" + KEY_ROWID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    +KEY_NAME +" TEXT ,"
+                    + KEY_DATE + " TEXT ,"
                     + KEY_TASK + " TEXT NOT NULL "
                     + ");";
 
@@ -57,9 +61,11 @@ public class DBAdapter {
     }
 
     // Add a new set of values to be inserted into the database.
-    public long insertRow(String task) {
+    public long insertRow(String name,String task, String date) {
         ContentValues initialValues = new ContentValues();
+        initialValues.put(KEY_NAME,name);
         initialValues.put(KEY_TASK, task);
+        initialValues.put(KEY_DATE, date);
 
         // Insert the data into the database.
         return db.insert(DATABASE_TABLE, null, initialValues);
@@ -104,10 +110,11 @@ public class DBAdapter {
     }
 
     // Change an existing row to be equal to new data.
-    public boolean updateRow(long rowId, String task) {
+    public boolean updateRow(long rowId, String task, String date) {
         String where = KEY_ROWID + "=" + rowId;
         ContentValues newValues = new ContentValues();
         newValues.put(KEY_TASK, task);
+        newValues.put(KEY_DATE, date);
         // Insert it into the database.
         return db.update(DATABASE_TABLE, newValues, where, null) != 0;
     }
@@ -137,4 +144,6 @@ public class DBAdapter {
         }
     }
 
+
 }
+
