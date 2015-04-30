@@ -1,11 +1,13 @@
 package me.aravinth.passphrase;
 
 
+import android.app.ListActivity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.database.Cursor;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,7 +20,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
 
-public class yourpassphrases extends ActionBarActivity {
+public class yourpassphrases extends ActionBarActivity  {
     DBAdapter mydb;
     AdView myadview;
     @Override
@@ -29,12 +31,17 @@ public class yourpassphrases extends ActionBarActivity {
         setTitle("Your PassPhrases");
         openDB();
         populateListViewFromDB();
-        mydb.close();
-
+     //   mydb.close();
+        registerForContextMenu(listview);
         myadview = (AdView) findViewById(R.id.view);
         AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
         myadview.loadAd(adRequest);
     }
+
+
+    /** This will be invoked when a menu item is selected */
+
+
 
     private void openDB() {
         mydb = new DBAdapter(this);
@@ -89,6 +96,7 @@ public class yourpassphrases extends ActionBarActivity {
         return true;
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -97,10 +105,41 @@ public class yourpassphrases extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+         return true;
 
-        return super.onOptionsItemSelected(item);
+
     }
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo) {
+        // TODO Auto-generated method stub
+        // super.onCreateContextMenu(menu, v, menuInfo);
+        getMenuInflater().inflate(R.menu.actions, menu);
+    }
+    public boolean onContextItemSelected(MenuItem item)
+    {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+
+        switch(item.getItemId())
+        {
+            case R.id.flt_del:
+                mydb.open();
+                mydb.deleteRow(info.id);
+              //  mydb.close();
+                populateListViewFromDB();
+                Toast.makeText(this, "PassPhrase removed"  , Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.flt_cpy:
+                mydb.open();
+                Cursor sam=mydb.getRow(info.id);
+                String x=sam.getString(sam.getColumnIndex(DBAdapter.KEY_DATE));
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("label", x);
+                clipboard.setPrimaryClip(clip);
+                Toast.makeText(this, "Content copied to Clipboard" , Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return true;
+    }
+
+
 }
