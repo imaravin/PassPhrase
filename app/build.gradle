@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "me.aravinth.passphrase"
-        minSdkVersion 14
+        minSdkVersion 10
         targetSdkVersion 21
         versionCode 3
         versionName "1.2"
