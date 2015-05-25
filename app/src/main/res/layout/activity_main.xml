@@ -9,7 +9,7 @@
     android:background="#ffffff"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".MainActivity"
-    android:id="@+id/rl">
+    android:id="@+id/layout">
 
     <SeekBar
         android:layout_width="wrap_content"
@@ -17,12 +17,13 @@
         android:id="@+id/seekBar"
         android:indeterminate="false"
         android:max="25"
-        android:layout_marginTop="34dp"
+        android:layout_marginTop="127dp"
+        android:elevation="10dp"
         android:layout_below="@+id/textView"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="match_parent"
@@ -33,68 +34,9 @@
         android:layout_marginTop="112dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
+        android:elevation="10dp"
         android:layout_alignParentEnd="true" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="70dp"
-        android:layout_height="wrap_content"
-        android:text="Copy"
-        android:id="@+id/cpybutton"
-        android:layout_marginTop="86dp"
-        android:layout_marginLeft="63dp"
-        android:layout_marginStart="63dp"
-        android:layout_below="@+id/seekBar"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:text="Create"
-        android:id="@+id/crtbutton"
-        android:layout_marginLeft="30dp"
-        android:layout_marginStart="51dp"
-        android:layout_alignTop="@+id/cpybutton"
-        android:layout_toRightOf="@+id/cpybutton"
-        android:layout_toEndOf="@+id/cpybutton" />
-
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/seekBar"
-        android:layout_alignParentLeft="false"
-        android:layout_alignParentStart="true"
-        android:orientation="horizontal"
-        android:id="@+id/group"
-        android:layout_alignWithParentIfMissing="false"
-        android:layout_above="@+id/crtbutton"
-        android:layout_marginBottom="40dp">
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Alphabets"
-            android:id="@+id/alpha"
-            android:checked="true" />
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Numeral"
-            android:id="@+id/numeral"
-            android:checked="false" />
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Both"
-            android:id="@+id/alphanum"
-            android:checked="false"
-            android:layout_marginRight="0dp" />
-
-    </RadioGroup>
     <com.google.android.gms.ads.AdView
         android:id="@+id/ad_view"
         android:layout_width="match_parent"
@@ -103,26 +45,6 @@
         android:layout_alignParentBottom="true"
         ads:adSize="BANNER"
         ads:adUnitId="@string/adId" />
-
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Upper Case"
-        android:id="@+id/upcheck"
-        android:checked="false"
-        android:layout_above="@+id/crtbutton"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Special Character"
-        android:id="@+id/spcheck"
-        android:layout_alignBottom="@+id/upcheck"
-        android:layout_toRightOf="@+id/upcheck"
-        android:layout_toEndOf="@+id/upcheck"
-        android:checked="false" />
 
     <EditText
         android:layout_width="match_parent"
@@ -133,6 +55,78 @@
         android:layout_marginTop="45dp"
         android:gravity="center_horizontal"
         android:hint="Name" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:id="@+id/linear"
+        android:gravity="center_horizontal"
+        android:layout_above="@+id/ad_view"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentRight="true">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Copy"
+            android:id="@+id/cpybutton" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create"
+            android:id="@+id/crtbutton" />
+    </LinearLayout>
+
+    <GridLayout
+        android:layout_width="300dp"
+        android:layout_height="70dp"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="44dp"
+        android:rowCount="3"
+        android:columnCount="3"
+        android:orientation="vertical"
+        android:id="@+id/ara">
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="LowerCase Letters"
+            android:id="@+id/lower"
+            android:layout_row="1"
+            android:layout_column="1"
+            android:checked="false" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Numbers"
+            android:id="@+id/num"
+            android:layout_row="1"
+            android:layout_column="2"
+            android:checked="false" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="UpperCase Letters"
+            android:id="@+id/upper"
+            android:layout_row="2"
+            android:layout_column="1"
+            android:checked="false" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Special"
+            android:id="@+id/spl"
+            android:layout_row="2"
+            android:layout_column="2"
+            android:checked="false" />
+    </GridLayout>
 
 
 </RelativeLayout>

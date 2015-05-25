@@ -8,21 +8,20 @@ import android.view.MenuItem;
 import com.google.android.gms.analytics.HitBuilders;
 
 
-public class about extends ActionBarActivity {
+public class faq extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about);
-        setTitle("About");
-    //    Analytics.tracker.send(new HitBuilders.EventBuilder("about", "open").setLabel("mainactiviy").build());
+        setContentView(R.layout.activity_faq);
+        setTitle("FAQ");
+       // Analytics.tracker.send(new HitBuilders.EventBuilder("faq", "open").setLabel("faqactiviy").build());
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_about, menu);
+        getMenuInflater().inflate(R.menu.menu_faq, menu);
         return true;
     }
 
@@ -34,6 +33,7 @@ public class about extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
+
 
         return super.onOptionsItemSelected(item);
     }

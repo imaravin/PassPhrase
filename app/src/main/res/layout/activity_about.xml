@@ -23,7 +23,7 @@
         <TextView
             android:layout_width="206dp"
             android:layout_height="99dp"
-            android:text="PassPhrase v1.0 - Aravinth"
+            android:text="PassPhrase v1.3 - Aravinth"
             android:id="@+id/version"
             android:layout_gravity="center_horizontal|bottom"
             android:autoText="false"

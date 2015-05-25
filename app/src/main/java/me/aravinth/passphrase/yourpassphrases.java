@@ -1,9 +1,10 @@
 package me.aravinth.passphrase;
 
 
-import android.app.ListActivity;
+
 import android.content.ClipData;
 import android.content.ClipboardManager;
+
 import android.database.Cursor;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+
 
 
 public class yourpassphrases extends ActionBarActivity  {
@@ -83,7 +85,7 @@ public class yourpassphrases extends ActionBarActivity  {
                 ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText("label", x);
                 clipboard.setPrimaryClip(clip);
-                Toast.makeText(getApplicationContext(),"Content copied to Clipboard", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"PassPhrase copied to Clipboard", Toast.LENGTH_LONG).show();
 
             }
         });
@@ -117,16 +119,16 @@ public class yourpassphrases extends ActionBarActivity  {
     }
     public boolean onContextItemSelected(MenuItem item)
     {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+          AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
         switch(item.getItemId())
         {
             case R.id.flt_del:
                 mydb.open();
                 mydb.deleteRow(info.id);
-              //  mydb.close();
                 populateListViewFromDB();
                 Toast.makeText(this, "PassPhrase removed"  , Toast.LENGTH_SHORT).show();
+                mydb.close();
                 break;
             case R.id.flt_cpy:
                 mydb.open();
@@ -135,7 +137,8 @@ public class yourpassphrases extends ActionBarActivity  {
                 ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText("label", x);
                 clipboard.setPrimaryClip(clip);
-                Toast.makeText(this, "Content copied to Clipboard" , Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "PassPhrase copied to Clipboard" , Toast.LENGTH_SHORT).show();
+                mydb.close();
                 break;
         }
         return true;

@@ -20,6 +20,9 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -28,70 +31,78 @@ public class MainActivity extends ActionBarActivity {
     SeekBar seekBar;
     EditText text;
     int length=0;
-    RadioButton a,n,an;
-    CheckBox sp,up;
-    RadioGroup grp;
+
+    CheckBox sp,up,lp,np;
+
     DBAdapter mydb;
     AdView mAdView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setTitle("PassPhrase");
         crt=(Button)findViewById(R.id.crtbutton);
         cpy=(Button)findViewById(R.id.cpybutton);
         textView=(TextView)findViewById(R.id.textView);
         seekBar=(SeekBar)findViewById(R.id.seekBar);
          text=(EditText)findViewById(R.id.editText);
-        a=(RadioButton)findViewById(R.id.alpha);
-        an=(RadioButton)findViewById(R.id.alphanum);
-        n=(RadioButton)findViewById(R.id.numeral);
-        up=(CheckBox)findViewById(R.id.upcheck);
-        sp=(CheckBox)findViewById(R.id.spcheck);
-        grp=(RadioGroup)findViewById(R.id.group);
+        lp=(CheckBox)findViewById(R.id.lower);
+        up=(CheckBox)findViewById(R.id.upper);
+        sp=(CheckBox)findViewById(R.id.spl);
+        np=(CheckBox)findViewById(R.id.num);
         mAdView = (AdView) findViewById(R.id.ad_view);
        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
         mAdView.loadAd(adRequest);
+//        Analytics.tracker.send(new HitBuilders.EventBuilder("ui", "open").setLabel("mainactiviy").build());
+
+
+
+
+
 
         crt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (length != 0) {
-                    openDB();
-                   textView.setText(Random.getPassword(length,a.isChecked(),n.isChecked(),an.isChecked(),up.isChecked(),sp.isChecked()));
-                    Date d=new Date();
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    String check = dateFormat.format(d);
-                    if(text.getText().toString().compareTo("")==0)
-                    mydb.insertRow("Created Anonymously","Created On "+check,textView.getText().toString());
-                    else
-                    mydb.insertRow("Created for "+text.getText().toString(),"Created On "+check,textView.getText().toString());
-                    mydb.close();
-                   Toast.makeText(getApplicationContext(),"PassPhrase Created",Toast.LENGTH_SHORT).show();
+                if(lp.isChecked()||up.isChecked()||np.isChecked()||sp.isChecked()) {
+                    if (length != 0) {
+                        openDB();
+                        textView.setText(Passphrase.passPhrase(length, lp.isChecked(), up.isChecked(), np.isChecked(), sp.isChecked()));
+                        Date d = new Date();
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        String check = dateFormat.format(d);
+                        if (text.getText().toString().compareTo("") == 0)
+                            mydb.insertRow("Created Anonymously", "Created On " + check, textView.getText().toString());
+                        else
+                            mydb.insertRow("Created for " + text.getText().toString(), "Created On " + check, textView.getText().toString());
+                        mydb.close();
+                        Toast.makeText(getApplicationContext(), "PassPhrase Created", Toast.LENGTH_SHORT).show();
+                    } else
+                        Toast.makeText(getApplicationContext(), "Can't create zero length PassPhrase", Toast.LENGTH_SHORT).show();
                 }
                 else
-                    Toast.makeText(getApplicationContext(), "Cant create zero length PassPhrase", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Check one option atleast ", Toast.LENGTH_SHORT).show();
 
             }
 
 
         });
+
         cpy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(textView.getText().toString().compareTo("")!=0) {
+                if (textView.getText().toString().compareTo("") != 0) {
                     ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
                     ClipData clip = ClipData.newPlainText("label", textView.getText().toString());
                     clipboard.setPrimaryClip(clip);
                     Toast.makeText(getApplicationContext(), "PassPhrase Copied", Toast.LENGTH_SHORT).show();
-                }
-                else
+                } else
                     Toast.makeText(getApplicationContext(), "No phrase to copy ", Toast.LENGTH_SHORT).show();
             }
         });
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-              length=progress;
+                length = progress;
 
             }
 
@@ -105,6 +116,7 @@ public class MainActivity extends ActionBarActivity {
 
             }
         });
+
     }
 
     private void openDB() {
@@ -146,4 +158,7 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+
 }

@@ -1,18 +1,48 @@
 package me.aravinth.passphrase;
 
+
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+
+
 
 
 public class help extends ActionBarActivity {
+    TextView a,b;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
         setTitle("Help");
+        a=(TextView)findViewById(R.id.textView5);
+        b=(TextView)findViewById(R.id.textView6);
+      //  Analytics.tracker.send(new HitBuilders.EventBuilder("help", "open").setLabel("helpactiviy").build());
+
+        a.setOnClickListener(new View.OnClickListener() {
+                                 @Override
+                                 public void onClick(View v) {
+                                     Intent myIntent = new Intent(help.this, about.class);
+                                     startActivity(myIntent);
+
+                                 }
+                             }
+        );
+
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(help.this, faq.class);
+                startActivity(myIntent);
+            }
+        });
+
+
     }
 
 
