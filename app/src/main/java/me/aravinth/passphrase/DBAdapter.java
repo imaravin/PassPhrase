@@ -19,11 +19,7 @@ public class DBAdapter {
 
     public static final String[] ALL_KEYS = new String[] {KEY_ROWID,KEY_NAME, KEY_TASK, KEY_DATE};
 
-    // Column Numbers for each Field Name:
-    public static final int COL_ROWID = 0;
-    public static final int COL_NAME=1;
-    public static final int COL_TASK = 2;
-    public static final int COL_DATE = 3;
+
 
     // DataBase info:
     public static final String DATABASE_NAME = "dbToDo";
